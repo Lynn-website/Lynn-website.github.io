@@ -7,22 +7,22 @@
 </head>
 <body>
     <h1>Welcome to my website</h1>
+    <p>Your IP address is: <span id="ip-address">Fetching...</span></p>
     
     <script>
     // Fetch visitor's IP using a public API
     fetch('https://api.ipify.org?format=json')
       .then(response => response.json())
       .then(data => {
+        // Log IP in the browser console (optional)
         console.log("Visitor's IP Address: ", data.ip);
         
-        // Send the IP to the server (if needed)
-        fetch('log_ip.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ ip: data.ip }),
-        });
+        // Display the IP on the webpage
+        document.getElementById('ip-address').innerText = data.ip;
+      })
+      .catch(error => {
+        console.error('Error fetching IP:', error);
+        document.getElementById('ip-address').innerText = 'Error fetching IP';
       });
     </script>
 </body>
